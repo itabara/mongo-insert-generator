@@ -9,6 +9,7 @@ namespace MongoDBGenerator
 {
     internal class LogGenerator
     {
+        private List<string> verbs = new List<string>() { "GET", "PUT", "POST", "DELETE" };
         private List<string> actions = new List<string>() { "VIEW", "DOWNLOAD", "UPDATE" };
         private Dictionary<int, List<string>> cookies = new Dictionary<int, List<string>>()
         {
@@ -34,11 +35,11 @@ namespace MongoDBGenerator
                 document.AppendFormat(",\"request_ip\": \"{0}\"", ipaddresses.RandomChoice().Single());
                 document.AppendFormat(",\"owner\": ObjectId(\"{0}\")", owner_objectids.RandomChoice().Single());                
                 document.Append(",\"request_date\": Date()");
-                document.AppendFormat(",\"request_method\": {0}", "\"GET\"");
+                document.AppendFormat(",\"request_method\":\"{0}\"", verbs.RandomChoice());
                 document.AppendFormat(",\"request_uri\": \"iuliantabara.com\\posts\\{0}\"", row);
-                document.AppendFormat(",\"action\": \"VIEW\"");
+                document.AppendFormat(",\"action\":\"{0}\"", actions.RandomChoice());                
                 document.AppendFormat(",\"request_time_milliseconds\":{0}", r.Next(400));
-                document.AppendFormat(",\"loc\":{0}", cities.RandomChoice().Single());
+                document.AppendFormat(",\"loc\":{0}", cities.RandomChoice());
                 document.AppendFormat(",\"cookies\":[{0}]", String.Join(",", cookies.RandomChoice().Value.ToArray()));
                 document.AppendLine("});");              
             }
